@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harput Mirası | Harput'un Sırlı Hikâyesi & 4K Kale Girişi</title>
+  <title>Harput Mirası | 3D Kale Girişi & Koleksiyon</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,13 +11,13 @@
 
   <style>
     :root {
-      --burgundy-dark: #2c0b0e;
+      --burgundy-dark: #220709;
       --burgundy: #4a1216;
       --burgundy-light: #6e1d24;
       --parchment: #f5efe6;
       --parchment-dark: #e8dec8;
       --gold: #d4af37;
-      --gold-bright: #f5d77f;
+      --gold-bright: #f7df8b;
       --text-dark: #2a1810;
       --text-light: #fdfaf6;
     }
@@ -40,17 +40,6 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
-    /* 4K ULTRA HD GÖRÜNTÜ NETLEŞTİRME */
-    .img-4k {
-      filter: contrast(1.08) saturate(1.14) brightness(1.03);
-      image-rendering: -webkit-optimize-contrast;
-      transition: transform 0.5s ease;
-    }
-
-    .img-4k:hover {
-      transform: scale(1.04);
-    }
-
     /* ÜST MENÜ */
     .navbar {
       position: fixed;
@@ -58,13 +47,14 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(44, 11, 14, 0.95);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-      backdrop-filter: blur(10px);
+      background: rgba(34, 7, 9, 0.94);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+      backdrop-filter: blur(12px);
       padding: 0.9rem 5%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.6);
     }
 
     .brand-logo {
@@ -107,33 +97,18 @@
       text-decoration: none;
       font-size: 0.92rem;
       font-weight: 500;
+      transition: color 0.3s;
     }
 
     .nav-links a:hover {
       color: var(--gold-bright);
     }
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .res-badge {
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--gold);
-      color: var(--gold-bright);
-      padding: 0.3rem 0.65rem;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-
     .cart-btn {
       background: linear-gradient(135deg, var(--gold), #a67c1e);
       color: #1a090b;
       border: none;
-      padding: 0.55rem 1.15rem;
+      padding: 0.55rem 1.2rem;
       border-radius: 30px;
       font-weight: 700;
       font-size: 0.85rem;
@@ -143,12 +118,13 @@
     /* 1. HERO BÖLÜMÜ */
     .hero-section {
       position: relative;
-      min-height: 90vh;
+      min-height: 88vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 7rem 5% 4rem;
       overflow: hidden;
+      background: radial-gradient(circle at 70% 40%, #5e2219 0%, #220709 75%);
     }
 
     .hero-bg {
@@ -158,12 +134,14 @@
       height: 100%;
       object-fit: cover;
       z-index: 1;
+      opacity: 0.65;
+      filter: contrast(1.1) saturate(1.15);
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, rgba(28, 7, 10, 0.82) 0%, rgba(28, 7, 10, 0.45) 55%, rgba(28, 7, 10, 0.7) 100%);
+      background: linear-gradient(90deg, rgba(28, 7, 10, 0.9) 0%, rgba(28, 7, 10, 0.45) 55%, rgba(28, 7, 10, 0.8) 100%);
       z-index: 2;
     }
 
@@ -173,14 +151,14 @@
       max-width: 1200px;
       width: 100%;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.2fr 0.8fr;
       gap: 3rem;
       align-items: center;
     }
 
     .ornament {
       color: var(--gold);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 5px;
       margin-bottom: 0.5rem;
       display: block;
@@ -188,7 +166,7 @@
 
     .hero-text h1 {
       font-size: clamp(2.5rem, 5vw, 4.2rem);
-      line-height: 1.1;
+      line-height: 1.08;
       color: #fff;
       margin-bottom: 1.2rem;
       text-shadow: 0 4px 20px rgba(0,0,0,0.8);
@@ -206,44 +184,33 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(44, 11, 14, 0.85);
+      background: linear-gradient(135deg, rgba(212,175,55,0.22), rgba(74,18,22,0.9));
       color: var(--gold-bright);
       border: 1.5px solid var(--gold);
-      padding: 0.85rem 1.8rem;
+      padding: 0.9rem 1.9rem;
       border-radius: 50px;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       font-weight: 600;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
     }
 
     .btn-gold-outline:hover {
       background: var(--gold);
       color: #1f080a;
+      transform: translateY(-2px);
     }
 
-    .hero-preview-card {
-      background: rgba(35, 12, 15, 0.75);
-      border: 1.5px solid var(--gold);
-      border-radius: 18px;
-      padding: 0.9rem;
+    .hero-castle- emblem {
+      background: rgba(35, 12, 15, 0.8);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
       backdrop-filter: blur(10px);
-    }
-
-    .hero-preview-card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .hero-caption {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.75rem 0.4rem 0.2rem;
-      font-size: 0.85rem;
-      color: var(--gold-bright);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
 
     /* 2. PARŞÖMEN BÖLÜMÜ */
@@ -264,25 +231,22 @@
     }
 
     .lore-card {
-      background: rgba(255, 252, 247, 0.9);
-      border: 1px solid rgba(139, 90, 43, 0.3);
+      background: rgba(255, 252, 247, 0.92);
+      border: 1.5px solid rgba(180, 130, 50, 0.4);
       border-radius: 16px;
-      padding: 1.8rem;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 1.4rem;
-      align-items: center;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
     }
 
     .lore-card h2 {
-      font-size: 1.9rem;
+      font-size: 2rem;
       color: var(--burgundy);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
     .lore-card p {
-      font-size: 0.94rem;
-      line-height: 1.6;
+      font-size: 0.96rem;
+      line-height: 1.65;
       color: #4a3525;
       margin-bottom: 1rem;
     }
@@ -295,186 +259,297 @@
       border-bottom: 2px solid var(--gold);
     }
 
-    .lore-img-wrap {
-      width: 100%;
-      height: 175px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 2px solid var(--gold);
-    }
-
-    .lore-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* 3. BÖLÜM: GERÇEK 4K KALE İÇİ VE KEMERLİ KAPI GEÇİŞİ (ASLA SİYAH OLMAZ!) */
-    .gate-track {
-      height: 260vh;
+    /* =====================================================================
+       3. BÖLÜM: 3D 1. ŞAHIS (FPS) KALE KORİDORU, DUVAR YAZILARI VE KAPI ANİMASYONU
+       ===================================================================== */
+    .gate-scroll-section {
+      height: 380vh;
       position: relative;
     }
 
-    .gate-viewport {
+    .gate-sticky-stage {
       position: sticky;
       top: 0;
       width: 100%;
       height: 100vh;
       overflow: hidden;
+      perspective: 1100px;
+      background: radial-gradient(circle at 50% 45%, #5c3818 0%, #2a150b 55%, #120804 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      /* Yedek aydınlık kale arka planı */
-      background: #3a2218;
     }
 
-    /* İÇERİSİ: Doğrudan Gerçek 4K Harput Kalesi Fotoğrafı (<img> etiketi ile %100 garantili) */
-    .real-castle-inside {
+    /* KAPI AÇILDIĞINDA KARŞIMIZA ÇIKAN AYDINLIK KALE İÇ AVLUSU */
+    .inner-sanctuary {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       z-index: 1;
-      filter: contrast(1.12) saturate(1.18) brightness(1.08);
-      transform: scale(1);
-      transition: transform 0.15s ease-out;
-    }
-
-    /* İçerideki Sıcak Güneş/Kehribar Parıltısı */
-    .castle-inner-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, rgba(255, 215, 130, 0.22) 0%, rgba(44, 11, 14, 0.35) 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    /* ÖNDEKİ TAŞ KEMER VE AÇILAN KAPI KANATLARI */
-    .gate-doors-wrapper {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 4;
       display: flex;
-      pointer-events: none;
-    }
-
-    .stone-door {
-      width: 50%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 60px rgba(0, 0, 0, 0.85);
-      transition: transform 0.12s ease-out;
-      background: #4e3624;
-    }
-
-    .stone-door img {
-      position: absolute;
-      top: 0;
-      width: 200%;
-      height: 100%;
-      object-fit: cover;
-      filter: sepia(0.25) contrast(1.15) brightness(0.85);
-    }
-
-    .stone-door.left {
-      border-right: 4px solid var(--gold);
-    }
-
-    .stone-door.left img {
-      left: 0;
-    }
-
-    .stone-door.right {
-      border-left: 4px solid var(--gold);
-    }
-
-    .stone-door.right img {
-      right: 0;
-    }
-
-    /* Kapı Üzerindeki Tarihi Kemer Gölgesi ve Altın Kuşaklar */
-    .door-iron-band {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 14px;
-      background: linear-gradient(90deg, #8a6421, var(--gold-bright), #8a6421);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
-      z-index: 5;
-    }
-
-    .gate-hud-overlay {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 1200px;
-      padding: 0 5%;
-      display: flex;
-      justify-content: flex-start;
+      flex-direction: column;
       align-items: center;
-      pointer-events: none;
-    }
-
-    .gate-info-box {
-      max-width: 460px;
-      background: rgba(44, 11, 14, 0.88);
-      border: 2px solid var(--gold);
-      border-radius: 18px;
+      justify-content: center;
+      background: 
+        radial-gradient(circle at 50% 35%, rgba(255, 210, 115, 0.45) 0%, rgba(120, 60, 20, 0.7) 50%, rgba(28, 10, 8, 0.95) 100%),
+        url('kale-gece.jpeg') center/cover no-repeat;
+      transform: scale(0.92);
+      transition: transform 0.1s linear;
+      text-align: center;
       padding: 2rem;
+    }
+
+    /* İç Avludaki Parlayan Kale Silüeti ve Hoşgeldin Rozeti */
+    .sanctuary-welcome {
+      background: rgba(34, 9, 12, 0.86);
+      border: 2px solid var(--gold);
+      border-radius: 22px;
+      padding: 2.2rem 2.8rem;
+      max-width: 640px;
+      box-shadow: 0 0 70px rgba(212, 175, 55, 0.45);
       backdrop-filter: blur(12px);
-      pointer-events: auto;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      opacity: 0;
+      transform: translateY(25px) scale(0.9);
+      transition: all 0.4s ease;
     }
 
-    .gate-info-box h2 {
-      font-size: 2.3rem;
+    .sanctuary-welcome.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .sanctuary-welcome h2 {
+      font-size: 2.8rem;
       color: var(--gold-bright);
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.6rem;
     }
 
-    .gate-info-box p {
-      font-size: 0.96rem;
+    .sanctuary-welcome p {
+      color: #f5eadc;
+      font-size: 1.05rem;
       line-height: 1.65;
-      color: #f3eadf;
       margin-bottom: 1.4rem;
     }
 
-    .fps-meter {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-top: 1.1rem;
-      padding-top: 0.9rem;
-      border-top: 1px solid rgba(212, 175, 55, 0.35);
-      font-size: 0.82rem;
+    /* 3D KORİDOR DUVARLARI VE DUVARDAKİ KÜÇÜK BİLGİLENDİRME YAZILARI */
+    .corridor-3d {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Taş Zemin Yolu */
+    .corridor-floor {
+      position: absolute;
+      bottom: -15%;
+      left: 10%;
+      width: 80%;
+      height: 60%;
+      background: 
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 80px),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 3px, #4a321f 3px, #382415 55px);
+      transform: rotateX(72deg);
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.9);
+      border-left: 4px solid var(--gold);
+      border-right: 4px solid var(--gold);
+    }
+
+    /* Duvarlardaki Tarihi Bilgilendirme Plakaları (Sağ ve Sol Duvar Yazıları) */
+    .wall-plaque {
+      position: absolute;
+      width: 290px;
+      background: linear-gradient(145deg, rgba(52, 24, 14, 0.95), rgba(28, 11, 7, 0.96));
+      border: 2px solid var(--gold);
+      border-radius: 14px;
+      padding: 1.15rem 1.3rem;
+      color: #f7efe4;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 22px rgba(255, 165, 0, 0.25);
+      transition: transform 0.1s linear, opacity 0.2s ease;
+    }
+
+    .wall-plaque::before {
+      content: '🔥';
+      position: absolute;
+      top: -16px;
+      font-size: 1.3rem;
+      filter: drop-shadow(0 0 10px #ff8800);
+      animation: flameFlicker 1.2s infinite alternate;
+    }
+
+    .wall-plaque.left-wall {
+      left: 5%;
+      border-left: 5px solid var(--gold-bright);
+    }
+    .wall-plaque.left-wall::before { right: 16px; }
+
+    .wall-plaque.right-wall {
+      right: 5%;
+      border-right: 5px solid var(--gold-bright);
+    }
+    .wall-plaque.right-wall::before { left: 16px; }
+
+    .wall-plaque .plaque-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.18);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      margin-bottom: 0.45rem;
       font-weight: 700;
     }
 
-    .progress-pill {
-      flex: 1;
-      height: 7px;
-      background: rgba(255,255,255,0.2);
+    .wall-plaque h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .wall-plaque p {
+      font-size: 0.83rem;
+      line-height: 1.5;
+      color: #dfd3c3;
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: scale(1) rotate(-3deg); opacity: 0.9; }
+      100% { transform: scale(1.18) rotate(3deg); opacity: 1; }
+    }
+
+    /* 3D TAŞ KEMERLİ AÇILIR KAPANIR DEVASA KALE KAPISI */
+    .castle-gate-frame {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      perspective: 1400px;
+    }
+
+    /* Taş Kemer Duvar Çerçevesi */
+    .stone-arch-surround {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 50% 55%, transparent 34%, rgba(35, 20, 12, 0.95) 36%, #2b180e 100%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 3px, #5c3f28 3px, #47301d 42px);
+      box-shadow: inset 0 0 100px #000;
+      transition: transform 0.1s linear, opacity 0.25s ease;
+    }
+
+    /* İki Yana 3D Açılan Ahşap & Altın İşlemeli Kale Kapısı Kanatları */
+    .gate-doors-3d {
+      width: 520px;
+      height: 620px;
+      max-width: 82vw;
+      max-height: 78vh;
+      border-radius: 260px 260px 0 0;
+      border: 8px solid var(--gold);
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(0,0,0,0.95), 0 0 35px rgba(212,175,55,0.3);
+      transform-style: preserve-3d;
+    }
+
+    .gate-leaf {
+      width: 50%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(90deg, #3b2110 0px, #4d2c16 18px, #2b160a 20px),
+        linear-gradient(180deg, rgba(0,0,0,0.5), transparent 30%, rgba(0,0,0,0.6));
+      position: relative;
+      transition: transform 0.1s linear;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.85);
+    }
+
+    .gate-leaf.left-leaf {
+      transform-origin: left center;
+      border-right: 3px solid var(--gold-bright);
+    }
+
+    .gate-leaf.right-leaf {
+      transform-origin: right center;
+      border-left: 3px solid var(--gold-bright);
+    }
+
+    /* Kapı Üzerindeki Altın Kuşaklar ve Tokmak Halkaları */
+    .stud-band {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 18px;
+      background: linear-gradient(90deg, #7a5818, var(--gold-bright), #7a5818);
+      border-top: 1px solid #fff3c4;
+      border-bottom: 2px solid #2b1800;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+
+    .door-ring {
+      position: absolute;
+      top: 54%;
+      width: 44px;
+      height: 44px;
+      border: 6px solid var(--gold-bright);
+      border-radius: 50%;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.8);
+    }
+
+    .left-leaf .door-ring { right: 20px; }
+    .right-leaf .door-ring { left: 20px; }
+
+    /* Üst/Alt Kontrol ve İlerleme HUD Barı */
+    .gate-hud-bottom {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+      background: rgba(34, 7, 9, 0.92);
+      border: 1.5px solid var(--gold);
+      border-radius: 50px;
+      padding: 0.75rem 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      width: max-content;
+      max-width: 92vw;
+    }
+
+    .hud-step-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 1px;
+    }
+
+    .hud-progress-bar {
+      width: 160px;
+      height: 8px;
+      background: rgba(255,255,255,0.18);
       border-radius: 10px;
       overflow: hidden;
     }
 
-    .progress-fill {
+    .hud-progress-fill {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #ff9900, var(--gold-bright));
     }
 
-    /* 4. KOLEKSİYON BÖLÜMÜ (3 ÖZEL ÜRÜN) */
+    /* 4. KOLEKSİYON BÖLÜMÜ (3 ÖZEL ÜRÜN: LEGO, ODA KOKUSU, MUM) */
     .collection-section {
       background: radial-gradient(circle at top, #fbf7f0 0%, #eadcc9 100%);
       color: var(--text-dark);
-      padding: 5rem 5% 6rem;
+      padding: 5.5rem 5% 6rem;
       border-top: 5px solid var(--gold);
       position: relative;
       z-index: 20;
@@ -501,83 +576,105 @@
       color: var(--burgundy);
     }
 
-    .collection-header p {
-      color: #5a3e2b;
-      font-size: 1.02rem;
-      max-width: 550px;
-    }
-
     .products-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 2.2rem;
     }
 
     .product-card {
       background: #fffcf7;
-      border: 1.5px solid rgba(180, 140, 70, 0.4);
+      border: 1.5px solid rgba(180, 140, 70, 0.45);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 16px 36px rgba(44, 11, 14, 0.1);
+      box-shadow: 0 16px 36px rgba(44, 11, 14, 0.12);
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .product-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-10px);
+      box-shadow: 0 24px 50px rgba(74, 18, 22, 0.22);
       border-color: var(--gold);
     }
 
     .product-img-box {
       position: relative;
-      height: 280px;
+      height: 275px;
       overflow: hidden;
-      background: #2b1612;
+      background: radial-gradient(circle at center, #5a2518 0%, #240c08 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .product-img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Resim Yüklenemezse Arkada Görünen Şık 3D/SVG İllüstrasyon Katmanı */
+    .fallback-art {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-bright);
+      z-index: 1;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .fallback-art svg {
+      width: 82px;
+      height: 82px;
+      stroke: var(--gold-bright);
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 0 15px rgba(212,175,55,0.5));
     }
 
     .badge-4k {
       position: absolute;
       top: 12px;
       left: 12px;
-      background: rgba(44, 11, 14, 0.9);
+      background: rgba(44, 11, 14, 0.92);
       color: var(--gold-bright);
       border: 1px solid var(--gold);
       padding: 0.28rem 0.7rem;
       border-radius: 20px;
       font-size: 0.72rem;
       font-weight: 700;
-      z-index: 2;
+      z-index: 5;
     }
 
     .badge-spec {
       position: absolute;
       bottom: 12px;
       right: 12px;
-      background: rgba(0, 0, 0, 0.82);
+      background: rgba(0, 0, 0, 0.85);
       color: #fff;
       padding: 0.25rem 0.65rem;
       border-radius: 6px;
       font-size: 0.74rem;
       font-weight: 600;
-      z-index: 2;
+      z-index: 5;
     }
 
     .product-body {
-      padding: 1.6rem;
+      padding: 1.7rem;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
 
     .product-body h3 {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       color: var(--burgundy);
       margin-bottom: 0.5rem;
     }
@@ -610,98 +707,30 @@
       align-items: center;
       justify-content: space-between;
       padding-top: 0.9rem;
-      border-top: 1px solid rgba(0,0,0,0.06);
+      border-top: 1px solid rgba(0,0,0,0.08);
     }
 
     .product-price {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.75rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--burgundy);
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 0.45rem;
-    }
-
-    .btn-inspect {
-      background: transparent;
-      border: 1.5px solid var(--burgundy);
-      color: var(--burgundy);
-      padding: 0.5rem 0.9rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
     }
 
     .btn-buy {
       background: linear-gradient(135deg, var(--burgundy), var(--burgundy-light));
       color: var(--gold-bright);
       border: 1px solid var(--gold);
-      padding: 0.5rem 1.1rem;
+      padding: 0.6rem 1.3rem;
       border-radius: 30px;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.84rem;
       cursor: pointer;
+      transition: transform 0.2s;
     }
 
-    /* 4K İNCELEME MODALI */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(12, 4, 6, 0.92);
-      backdrop-filter: blur(10px);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal-box {
-      max-width: 880px;
-      width: 100%;
-      background: #1f0a0d;
-      border: 2px solid var(--gold);
-      border-radius: 20px;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      position: relative;
-    }
-
-    .modal-box img {
-      width: 100%;
-      height: 100%;
-      min-height: 360px;
-      object-fit: cover;
-    }
-
-    .modal-content {
-      padding: 2.2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      background: rgba(0,0,0,0.6);
-      color: var(--gold);
-      border: 1px solid var(--gold);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
+    .btn-buy:hover {
+      transform: scale(1.05);
     }
 
     footer {
@@ -738,12 +767,11 @@
     }
 
     @media (max-width: 992px) {
-      .hero-content, .lore-grid, .products-grid, .modal-box {
+      .hero-content, .lore-grid, .products-grid {
         grid-template-columns: 1fr;
       }
-      .nav-links {
-        display: none;
-      }
+      .nav-links { display: none; }
+      .wall-plaque { width: 210px; padding: 0.8rem; }
     }
   </style>
 </head>
@@ -765,23 +793,18 @@
     <ul class="nav-links">
       <li><a href="#anasayfa">Anasayfa</a></li>
       <li><a href="#harput">Harput'u Tanıyalım</a></li>
-      <li><a href="#efsane">Efsane</a></li>
-      <li><a href="#kale-giris">Kale'ye Giriş</a></li>
-      <li><a href="#urunler">Ürünler</a></li>
+      <li><a href="#kale-giris">3D Kale Kapısı Girişi</a></li>
+      <li><a href="#urunler">Koleksiyon (3 Ürün)</a></li>
     </ul>
 
-    <div class="nav-actions">
-      <span class="res-badge">4K ULTRA HD</span>
-      <button class="cart-btn" onclick="scrollToProducts()">
-        <span>Sepet</span>
-        <span id="cartBadge">(0)</span>
-      </button>
-    </div>
+    <button class="cart-btn" onclick="document.getElementById('urunler').scrollIntoView({behavior:'smooth'})">
+      Sepet <span id="cartBadge">(0)</span>
+    </button>
   </nav>
 
   <!-- 1. HERO BÖLÜMÜ -->
   <section class="hero-section" id="anasayfa">
-    <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Harput Kalesi 4K" class="hero-bg img-4k">
+    <img src="kale-gece.jpeg" onerror="if(this.src.includes('.jpeg')){this.src='kale-gece.jpg'}else{this.style.display='none'}" alt="Harput Kalesi" class="hero-bg">
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -789,20 +812,19 @@
         <span class="ornament">✦ ─── ❖ ─── ✦</span>
         <h1>Harput'un Sırlı Hikâyesine Hoş Geldiniz</h1>
         <p>
-          Tarihin, efsanenin ve kültürün buluştuğu Harput Kalesi'ni (Süt Kalesi) 4K Ultra-HD gerçek fotoğraflarla ve birinci şahıs kapı geçişiyle keşfedin.
+          Tarihin, efsanenin ve kültürün buluştuğu Harput Kalesi'ni (Süt Kalesi) duvarlarındaki tarihi kitabeleri okuyarak ve 3D açılan kale kapısından geçerek keşfedin.
         </p>
         <a href="#kale-giris" class="btn-gold-outline">
-          <span>Yolculuğa Başla</span>
-          <span>›</span>
+          <span>3D Kale Kapısına İlerle ›</span>
         </a>
       </div>
 
-      <div class="hero-preview-card">
-        <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Harput Kalesi Surları" class="img-4k">
-        <div class="hero-caption">
-          <span>📍 Harput Kalesi Panoraması</span>
-          <span>4K Orijinal Çekim</span>
-        </div>
+      <div class="hero-castle-emblem">
+        <span class="ornament">M.Ö. 8. YÜZYIL</span>
+        <h2 style="font-size:2.2rem; color:var(--gold-bright); margin-bottom:0.6rem;">Süt Kalesi</h2>
+        <p style="color:#e5d8c8; font-size:0.95rem; line-height:1.6;">
+          Urartu kralları tarafından sarp kayalıklara inşa edilen, harcına su yerine süt katılan efsanevi Harput Kalesi.
+        </p>
       </div>
     </div>
   </section>
@@ -811,82 +833,111 @@
   <section class="parchment-band" id="harput">
     <div class="lore-grid">
       <div class="lore-card">
-        <div>
-          <h2>Harput'u Tanıyalım</h2>
-          <p>
-            Binlerce yıllık tarihiyle Harput; Urartu, Artuklu, Selçuklu ve Osmanlı medeniyetlerinin iz bıraktığı kadim bir açık hava müzesidir.
-          </p>
-          <a href="#kale-giris" class="lore-link">Daha Fazla Keşfet ›</a>
-        </div>
-        <div class="lore-img-wrap">
-          <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Harput Mimari" class="img-4k">
-        </div>
+        <h2>Harput'u Tanıyalım</h2>
+        <p>
+          Binlerce yıllık tarihiyle Harput; Urartu, Artuklu, Selçuklu ve Osmanlı medeniyetlerinin iz bıraktığı, Elazığ'ın kadim açık hava müzesidir.
+        </p>
+        <a href="#kale-giris" class="lore-link">Kale Koridoruna Gir ›</a>
       </div>
 
-      <div class="lore-card" id="efsane">
-        <div>
-          <h2>Süt Kalesi Efsanesi</h2>
-          <p>
-            İnşaat sırasında yaşanan su kıtlığı sebebiyle harcına süt katıldığı rivayet edilen, sarp kayalıklar üzerine kurulmuş efsanevi kale.
-          </p>
-          <a href="#kale-giris" class="lore-link">Kapıya İlerle ›</a>
-        </div>
-        <div class="lore-img-wrap">
-          <img src="lego.jpeg" onerror="this.onerror=null; this.src='lego.jpg';" alt="Harput Kalesi" class="img-4k">
-        </div>
+      <div class="lore-card">
+        <h2>Gizemli Kız & Süt Efsanesi</h2>
+        <p>
+          Su kıtlığında harcına katılan sütlerle yükselen burçlar, gizli yeraltı dehlizleri ve yüzyıllardır anlatılan efsaneleriyle yaşayan kale.
+        </p>
+        <a href="#kale-giris" class="lore-link">Duvar Yazılarını Keşfet ›</a>
       </div>
     </div>
   </section>
 
-  <!-- 3. BÖLÜM: GERÇEK 4K HARPUT KALESİ İÇİ VE AÇILAN KAPI (SİYAH EKRAN YOK!) -->
-  <section class="gate-track" id="kale-giris">
-    <div class="gate-viewport">
-      
-      <!-- KAPI AÇILDIĞINDA İÇERİDE GÖRÜNEN GERÇEK 4K HARPUT KALESİ FOTOĞRAFI -->
-      <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Harput Kalesi İçi 4K" class="real-castle-inside" id="innerCastleImg">
-      <div class="castle-inner-glow"></div>
+  <!-- =====================================================================
+       3. BÖLÜM: 3D KALE KAPISI GİRİŞ ANİMASYONU & DUVAR BİLGİLENDİRME YAZILARI
+       ===================================================================== -->
+  <section class="gate-scroll-section" id="kale-giris">
+    <div class="gate-sticky-stage">
 
-      <!-- İKİ YANA AÇILAN GERÇEK TAŞ DOKULU KAPI KANATLARI -->
-      <div class="gate-doors-wrapper">
-        <div class="stone-door left" id="doorLeft">
-          <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Sol Kapı">
-          <div class="door-iron-band" style="top: 25%;"></div>
-          <div class="door-iron-band" style="top: 50%;"></div>
-          <div class="door-iron-band" style="top: 75%;"></div>
-        </div>
-        <div class="stone-door right" id="doorRight">
-          <img src="kale-gece.jpeg" onerror="this.onerror=null; this.src='kale-gece.jpg';" alt="Sağ Kapı">
-          <div class="door-iron-band" style="top: 25%;"></div>
-          <div class="door-iron-band" style="top: 50%;"></div>
-          <div class="door-iron-band" style="top: 75%;"></div>
+      <!-- KAPI AÇILDIĞINDA İÇERİDE BELİREN AYDINLIK KALE AVLUSU -->
+      <div class="inner-sanctuary" id="innerSanctuary">
+        <div class="sanctuary-welcome" id="sanctuaryWelcome">
+          <span class="ornament">✦ HOŞ GELDİNİZ ✦</span>
+          <h2>Harput İç Kalesi'ndesiniz</h2>
+          <p>
+            Tarihi taş kemerli kapıyı geçerek Süt Kalesi'nin kalbine ulaştınız. Şimdi bu kadim mirası evinize taşıyan 3 özel koleksiyon ürününü (Lego, Oda Kokusu ve Mum) inceleyebilirsiniz.
+          </p>
+          <a href="#urunler" class="btn-gold-outline">
+            <span>3 Özel Ürünü Gör ›</span>
+          </a>
         </div>
       </div>
 
-      <!-- SOL BİLGİ KUTUSU -->
-      <div class="gate-hud-overlay">
-        <div class="gate-info-box" id="gateBox">
-          <span class="ornament">✦ GERÇEK 4K KALE İÇİ ✦</span>
-          <h2 id="gateTitle">Harput Kalesi'ne Giriş</h2>
-          <p id="gateDesc">
-            Aşağı kaydırdıkça kapı kanatları iki yana açılır ve doğrudan 4K gerçek Harput Kalesi manzarasının içine adım atarsınız.
-          </p>
-          <button class="btn-gold-outline" onclick="openCastleNow()">
-            <span>Kapıyı Aç ve İçeri Gir ›</span>
-          </button>
+      <!-- 3D TAŞ KORİDOR VE DUVARLARDAKİ KÜÇÜK BİLGİLENDİRME YAZILARI -->
+      <div class="corridor-3d" id="corridor3d">
+        <div class="corridor-floor"></div>
 
-          <div class="fps-meter">
-            <span id="gatePercent">KAPI AÇILIŞI: %0</span>
-            <div class="progress-pill">
-              <div class="progress-fill" id="gateFill"></div>
-            </div>
+        <!-- Sol Duvar 1. Bilgilendirme Yazısı -->
+        <div class="wall-plaque left-wall" id="plaque1" style="top: 14%;">
+          <span class="plaque-tag">1. Kitabe • Kuruluş</span>
+          <h4>Urartu Kaya Mimarisî</h4>
+          <p>M.Ö. 8. yüzyılda Urartular tarafından dik ve sarp kayalıklar oyularak savunma kalesi olarak inşa edilmiştir.</p>
+        </div>
+
+        <!-- Sağ Duvar 2. Bilgilendirme Yazısı -->
+        <div class="wall-plaque right-wall" id="plaque2" style="top: 18%;">
+          <span class="plaque-tag">2. Kitabe • Efsane</span>
+          <h4>Neden "Süt Kalesi"?</h4>
+          <p>İnşaat sırasında yaşanan su kıtlığı üzerine harcına su yerine süt katılmış ve taşlar bu sayede binlerce yıl ayakta kalmıştır.</p>
+        </div>
+
+        <!-- Sol Duvar 3. Bilgilendirme Yazısı -->
+        <div class="wall-plaque left-wall" id="plaque3" style="top: 52%;">
+          <span class="plaque-tag">3. Kitabe • Sırlar</span>
+          <h4>Gizli Dehlizler & Zindan</h4>
+          <p>Kalenin altında Meryem Ana Kilisesi'ne ve çevre vadilere uzanan gizli kaçış tünelleri ve kaya sarnıçları yer alır.</p>
+        </div>
+
+        <!-- Sağ Duvar 4. Bilgilendirme Yazısı -->
+        <div class="wall-plaque right-wall" id="plaque4" style="top: 55%;">
+          <span class="plaque-tag">4. Kitabe • Medeniyet</span>
+          <h4>Artuklu, Selçuklu & Osmanlı</h4>
+          <p>Belek Gazi döneminden Osmanlı'ya kadar dış ve iç kale surları onarılarak Doğu'nun en sağlam kalesi haline getirilmiştir.</p>
+        </div>
+      </div>
+
+      <!-- 3D AÇILAN KEMERLİ KALE KAPISI -->
+      <div class="castle-gate-frame" id="gateFrame">
+        <div class="stone-arch-surround" id="archSurround"></div>
+
+        <div class="gate-doors-3d" id="gateDoors3d">
+          <!-- Sol Kapı Kanadı -->
+          <div class="gate-leaf left-leaf" id="leftLeaf">
+            <div class="stud-band" style="top: 22%;"></div>
+            <div class="stud-band" style="top: 48%;"></div>
+            <div class="stud-band" style="top: 76%;"></div>
+            <div class="door-ring"></div>
+          </div>
+          <!-- Sağ Kapı Kanadı -->
+          <div class="gate-leaf right-leaf" id="rightLeaf">
+            <div class="stud-band" style="top: 22%;"></div>
+            <div class="stud-band" style="top: 48%;"></div>
+            <div class="stud-band" style="top: 76%;"></div>
+            <div class="door-ring"></div>
           </div>
         </div>
       </div>
 
+      <!-- ALT KONTROL BARI -->
+      <div class="gate-hud-bottom">
+        <span class="hud-step-text" id="hudStatus">KALE KAPISI: %0 (Kaydırarak İlerle)</span>
+        <div class="hud-progress-bar">
+          <div class="hud-progress-fill" id="hudFill"></div>
+        </div>
+        <button class="cart-btn" onclick="autoWalkThroughGate()">Kapıyı Otomatik Aç ›</button>
+      </div>
+
     </div>
   </section>
 
-  <!-- 4. KOLEKSİYON BÖLÜMÜ (3 ÖZEL ÜRÜN: LEGO, KOKU, MUM) -->
+  <!-- 4. KOLEKSİYON BÖLÜMÜ (3 ÖZEL ÜRÜN: LEGO, ODA KOKUSU, MUM) -->
   <section class="collection-section" id="urunler">
     <div class="collection-container">
       <div class="collection-header">
@@ -894,32 +945,36 @@
           <span style="color:var(--burgundy-light); font-weight:700; letter-spacing:2px; font-size:0.8rem; text-transform:uppercase;">Resmi Koleksiyon Mağazası</span>
           <h2>Harput Mirası Koleksiyonu</h2>
         </div>
-        <p>Harput'un tarihini, süt kokulu efsanesini ve eşsiz silüetini yaşam alanlarınıza taşıyan 3 özel tasarım ürün:</p>
+        <p>Kale turunun sonunda Harput'un tarihini evinize taşıyan 3 özel tasarım hatıra ürünü:</p>
       </div>
 
       <div class="products-grid">
         <!-- ÜRÜN 1: LEGO HARPUT KALESİ -->
         <article class="product-card">
           <div class="product-img-box">
-            <span class="badge-4k">4K DETAY</span>
+            <span class="badge-4k">KOLEKSİYON</span>
             <span class="badge-spec">716 Parça • 14+ Yaş</span>
-            <img src="lego.jpeg" onerror="this.onerror=null; this.src='lego.jpg';" alt="Harput Kalesi Legosu" class="img-4k">
+            <img src="lego.jpeg" onerror="if(this.src.includes('.jpeg')){this.src='lego.jpg'}else{this.style.display='none'}" alt="Harput Kalesi Legosu">
+            <div class="fallback-art">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M4 21V8l3-3 3 3v3h4V8l3-3 3 3v13H4z"/>
+                <rect x="7" y="3" width="2" height="2"/><rect x="15" y="3" width="2" height="2"/>
+              </svg>
+              <span>Harput Kalesi 716 Parça Lego Seti</span>
+            </div>
           </div>
           <div class="product-body">
             <h3>Harput Kalesi Legosu</h3>
             <p>
-              Tarihi kaleyi burçları, kayalıkları, Türk bayrağı ve sergileme standıyla kendi ellerinizle inşa edebileceğiniz 716 parçalık mimari yapım seti.
+              Tarihi Süt Kalesi'ni burçları, sarp kayalıkları, Türk bayrağı ve özel sergileme standıyla kendi ellerinizle inşa edebileceğiniz 716 parçalık mimari set.
             </p>
             <ul class="spec-list">
               <li><span>Parça Sayısı:</span> <strong>716 Parça (14+ Yaş)</strong></li>
-              <li><span>Kutu İçeriği:</span> <strong>Özel Stand + Yapım Kılavuzu</strong></li>
+              <li><span>Kutu İçeriği:</span> <strong>İsimli Kaide + Yapım Kılavuzu</strong></li>
             </ul>
             <div class="product-actions">
               <span class="product-price">₺1.850</span>
-              <div class="btn-group">
-                <button class="btn-inspect" onclick="openModal('lego.jpeg', 'Harput Kalesi Yapım Seti (716 Parça)', '716 parçalık bu koleksiyon seti ile Harput Kalesi\'nin sarp burçlarını ve taş mimarisini inşa edin.', '₺1.850')">4K İncele ›</button>
-                <button class="btn-buy" onclick="addCart('Harput Kalesi Legosu (716 Parça)')">Sepete Ekle</button>
-              </div>
+              <button class="btn-buy" onclick="addCart('Harput Kalesi Legosu')">Sepete Ekle</button>
             </div>
           </div>
         </article>
@@ -927,25 +982,29 @@
         <!-- ÜRÜN 2: HARPUT KALESİ ODA KOKUSU -->
         <article class="product-card">
           <div class="product-img-box">
-            <span class="badge-4k">4K DETAY</span>
+            <span class="badge-4k">İMZA SERİ</span>
             <span class="badge-spec">Reed Diffuser • Bambu Çubuklu</span>
-            <img src="koku.jpeg" onerror="this.onerror=null; this.src='koku.jpg';" alt="Harput Kalesi Oda Kokusu" class="img-4k">
+            <img src="koku.jpeg" onerror="if(this.src.includes('.jpeg')){this.src='koku.jpg'}else{this.style.display='none'}" alt="Harput Kalesi Oda Kokusu">
+            <div class="fallback-art">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M9 3h6v3l4 6v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7l4-6V3z"/>
+                <path d="M8 14h8"/>
+              </svg>
+              <span>3D Kale Kaideli Bambu Oda Kokusu</span>
+            </div>
           </div>
           <div class="product-body">
             <h3>Harput Kalesi Oda Kokusu</h3>
             <p>
-              Kalenin yapımında kullanılan süt kokusu, sedir ve kehribar notalarıyla Harput'un eşsiz havasını minyatür 3D kale kaidesinde odanıza taşır.
+              Kalenin yapımında da kullanılan süt kokusu, sedir ağacı ve kehribar notalarıyla Harput'un eşsiz havasını 3D kale maketli şişesinde odanıza taşır.
             </p>
             <ul class="spec-list">
               <li><span>Tasarım:</span> <strong>3D Kale Kaidesi + Bambu Çubuk</strong></li>
-              <li><span>Esans:</span> <strong>Süt, Amber ve Sedir Ağacı</strong></li>
+              <li><span>Esans:</span> <strong>Süt, Amber ve Harput Sediri</strong></li>
             </ul>
             <div class="product-actions">
               <span class="product-price">₺650</span>
-              <div class="btn-group">
-                <button class="btn-inspect" onclick="openModal('koku.jpeg', 'Harput Kalesi Oda Kokusu', 'Harput Kalesi minyatür heykeli içerisine yerleştirilmiş bambu çubuklu özel oda kokusu.', '₺650')">4K İncele ›</button>
-                <button class="btn-buy" onclick="addCart('Harput Kalesi Oda Kokusu')">Sepete Ekle</button>
-              </div>
+              <button class="btn-buy" onclick="addCart('Harput Kalesi Oda Kokusu')">Sepete Ekle</button>
             </div>
           </div>
         </article>
@@ -953,25 +1012,29 @@
         <!-- ÜRÜN 3: HARPUT KALESİ 3D DEKORATİF MUM -->
         <article class="product-card">
           <div class="product-img-box">
-            <span class="badge-4k">4K DETAY</span>
+            <span class="badge-4k">EL YAPIMI</span>
             <span class="badge-spec">3 Fitilli • 3D Dekoratif Mum</span>
-            <img src="mum.jpeg" onerror="this.onerror=null; this.src='mum.jpg';" alt="Harput Kalesi 3D Dekoratif Mum" class="img-4k">
+            <img src="mum.jpeg" onerror="if(this.src.includes('.jpeg')){this.src='mum.jpg'}else{this.style.display='none'}" alt="Harput Kalesi Mumu">
+            <div class="fallback-art">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <path d="M12 2c1.5 2 2 3.5 2 5a2 2 0 0 1-4 0c0-1.5.5-3 2-5z"/>
+                <rect x="7" y="9" width="10" height="12" rx="2"/>
+              </svg>
+              <span>Harput Kalesi 3D Dekoratif Mum</span>
+            </div>
           </div>
           <div class="product-body">
             <h3>Harput Kalesi Mumu</h3>
             <p>
-              Tarihin ışığı Harput Kalesi'nin eşsiz silüetinde hayat buluyor. Süt kokulu, ahşap kaideli ve 3 fitilli el yapımı özel dekoratif mum.
+              Tarihin ışığı Harput Kalesi'nin eşsiz silüetinde hayat buluyor. Süt kokusuyla geçmişin huzurunu evinize taşıyan, ahşap standlı 3 fitilli mum.
             </p>
             <ul class="spec-list">
-              <li><span>Tasarım:</span> <strong>3 Fitilli 3D Süt Kalesi Silüeti</strong></li>
+              <li><span>Özellik:</span> <strong>3 Fitilli 3D Süt Kalesi Silüeti</strong></li>
               <li><span>Kaide:</span> <strong>İsim Plakalı Masif Ahşap Stand</strong></li>
             </ul>
             <div class="product-actions">
               <span class="product-price">₺480</span>
-              <div class="btn-group">
-                <button class="btn-inspect" onclick="openModal('mum.jpeg', 'Harput Kalesi 3D Dekoratif Mum', 'Ahşap standlı, 3 fitilli özel Harput Kalesi mumu ile sıcak ve tarihi bir atmosfer yakalayın.', '₺480')">4K İncele ›</button>
-                <button class="btn-buy" onclick="addCart('Harput Kalesi 3D Dekoratif Mum')">Sepete Ekle</button>
-              </div>
+              <button class="btn-buy" onclick="addCart('Harput Kalesi 3D Mum')">Sepete Ekle</button>
             </div>
           </div>
         </article>
@@ -979,30 +1042,13 @@
     </div>
   </section>
 
-  <!-- 4K İNCELEME MODALI -->
-  <div class="modal-backdrop" id="productModal" onclick="if(event.target===this) closeModal()">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <img id="modalImg" src="" alt="4K Detay" class="img-4k">
-      <div class="modal-content">
-        <span class="ornament">✦ 4K ULTRA HD İNCELEME ✦</span>
-        <h3 id="modalTitle" style="font-size:2rem; color:var(--gold-bright); margin-bottom:1rem;"></h3>
-        <p id="modalDesc" style="color:#e6dcd2; line-height:1.7; margin-bottom:1.5rem;"></p>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:2.2rem; color:var(--gold); font-weight:700; margin-bottom:1.5rem;" id="modalPrice"></div>
-        <button class="cart-btn" style="justify-content:center; padding:0.9rem;" onclick="addCart(document.getElementById('modalTitle').textContent); closeModal();">
-          Sepete Ekle
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- FOOTER -->
   <footer>
     <div class="brand-text" style="color:var(--gold);">
       HARPUT MİRASI <span>ELAZIĞ KÜLTÜR & KOLEKSİYON PORTALI</span>
     </div>
-    <div>Anasayfa &nbsp;|&nbsp; Harput &nbsp;|&nbsp; Efsane &nbsp;|&nbsp; 4K Kale Girişi &nbsp;|&nbsp; Ürünler</div>
-    <div>© 2026 Harput Mirası • 4K Web Deneyimi</div>
+    <div>Anasayfa &nbsp;|&nbsp; Harput &nbsp;|&nbsp; 3D Kale Girişi &nbsp;|&nbsp; Ürünler</div>
+    <div>© 2026 Harput Mirası</div>
   </footer>
 
   <div class="toast-msg" id="toastMsg">✓ Ürün sepete eklendi!</div>
@@ -1018,70 +1064,74 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    function scrollToProducts() {
-      document.getElementById('urunler').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function openModal(img, title, desc, price) {
-      const modalImg = document.getElementById('modalImg');
-      modalImg.src = img;
-      modalImg.onerror = function() { this.src = img.replace('.jpeg', '.jpg'); };
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('modalDesc').textContent = desc;
-      document.getElementById('modalPrice').textContent = price;
-      document.getElementById('productModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('productModal').classList.remove('active');
-    }
-
-    // Butona basınca kapıyı anında %100 açar ve gerçek 4K kaleyi gösterir
-    function openCastleNow() {
-      const track = document.getElementById('kale-giris');
+    function autoWalkThroughGate() {
+      const section = document.getElementById('kale-giris');
       window.scrollTo({
-        top: track.offsetTop + (track.offsetHeight - window.innerHeight) * 0.85,
+        top: section.offsetTop + (section.offsetHeight - window.innerHeight) * 0.92,
         behavior: 'smooth'
       });
     }
 
-    // SCROLL İLE KAPI AÇILIŞI VE GERÇEK 4K KALEYE YAKINLAŞMA
-    const gateTrack = document.getElementById('kale-giris');
-    const doorLeft = document.getElementById('doorLeft');
-    const doorRight = document.getElementById('doorRight');
-    const innerCastleImg = document.getElementById('innerCastleImg');
-    const gateBox = document.getElementById('gateBox');
-    const gateFill = document.getElementById('gateFill');
-    const gatePercent = document.getElementById('gatePercent');
-    const gateTitle = document.getElementById('gateTitle');
+    // 1. ŞAHIS (FPS) KALE KORİDORU YÜRÜYÜŞÜ, DUVAR YAZILARI VE KAPI AÇILIŞ ANİMASYONU
+    const gateSection = document.getElementById('kale-giris');
+    const leftLeaf = document.getElementById('leftLeaf');
+    const rightLeaf = document.getElementById('rightLeaf');
+    const gateFrame = document.getElementById('gateFrame');
+    const corridor3d = document.getElementById('corridor3d');
+    const innerSanctuary = document.getElementById('innerSanctuary');
+    const sanctuaryWelcome = document.getElementById('sanctuaryWelcome');
+    const hudFill = document.getElementById('hudFill');
+    const hudStatus = document.getElementById('hudStatus');
+
+    const p1 = document.getElementById('plaque1');
+    const p2 = document.getElementById('plaque2');
+    const p3 = document.getElementById('plaque3');
+    const p4 = document.getElementById('plaque4');
 
     window.addEventListener('scroll', () => {
-      const rect = gateTrack.getBoundingClientRect();
-      const scrollable = gateTrack.offsetHeight - window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-
+      const rect = gateSection.getBoundingClientRect();
+      const maxScroll = gateSection.offsetHeight - window.innerHeight;
+      const progress = Math.max(0, Math.min(1, -rect.top / maxScroll));
       const pct = Math.round(progress * 100);
-      gateFill.style.width = `${pct}%`;
-      gatePercent.textContent = `KAPI AÇILIŞI: %${pct}`;
 
-      // Kapılar iki yana tamamen açılır
-      const moveX = progress * 105;
-      doorLeft.style.transform = `translateX(-${moveX}%)`;
-      doorRight.style.transform = `translateX(${moveX}%)`;
+      hudFill.style.width = `${pct}%`;
 
-      // İçerideki gerçek 4K Harput Kalesi fotoğrafına doğru 1. şahıs yürüyüş (yakınlaşma)
-      const scaleVal = 1 + progress * 0.35;
-      innerCastleImg.style.transform = `scale(${scaleVal})`;
+      // 1. Duvarlardaki Bilgilendirme Yazılarının 1. Şahıs Yanımızdan Geçiş Animasyonu
+      const zMove = progress * 450;
+      p1.style.transform = `translate3d(-${progress * 60}px, ${progress * 30}px, ${zMove}px) scale(${1 + progress * 0.35})`;
+      p2.style.transform = `translate3d(${progress * 60}px, ${progress * 30}px, ${zMove}px) scale(${1 + progress * 0.35})`;
+      p3.style.transform = `translate3d(-${progress * 40}px, -${progress * 20}px, ${zMove * 0.7}px) scale(${0.9 + progress * 0.3})`;
+      p4.style.transform = `translate3d(${progress * 40}px, -${progress * 20}px, ${zMove * 0.7}px) scale(${0.9 + progress * 0.3})`;
 
-      if (pct < 35) {
-        gateTitle.textContent = "Harput Kalesi'ne Giriş";
-        gateBox.style.opacity = "1";
-      } else if (pct < 75) {
-        gateTitle.textContent = "4K Harput Kalesi Görünüyor...";
-        gateBox.style.opacity = "0.9";
+      // Kapıdan içeri girerken duvar yazıları nazikçe kenara çekilir
+      const wallOpacity = progress > 0.75 ? Math.max(0, 1 - (progress - 0.75) * 4) : 1;
+      corridor3d.style.opacity = wallOpacity;
+
+      // 2. 3D Ahşap-Altın Kale Kapısının İki Yana Açılması ve Kameranın İçeri Girmesi
+      const doorAngle = Math.min(115, progress * 145); // 115 derece içeri doğru açılır
+      leftLeaf.style.transform = `rotateY(${doorAngle}deg)`;
+      rightLeaf.style.transform = `rotateY(-${doorAngle}deg)`;
+
+      // Kameranın kapı kemerinin içinden geçmesi (Zoom)
+      const gateScale = 1 + Math.pow(progress, 2) * 1.8;
+      gateFrame.style.transform = `scale(${gateScale})`;
+      if (progress > 0.82) {
+        gateFrame.style.opacity = Math.max(0, 1 - (progress - 0.82) * 5.5);
       } else {
-        gateTitle.textContent = "Harput Kalesi İçindesiniz!";
-        gateBox.style.opacity = "0.75";
+        gateFrame.style.opacity = 1;
+      }
+
+      // 3. İç Kale Avlusunun Karşımıza Çıkması
+      innerSanctuary.style.transform = `scale(${0.92 + progress * 0.18})`;
+      if (progress > 0.62) {
+        sanctuaryWelcome.classList.add('visible');
+        hudStatus.textContent = `İÇ KALEDESİNİZ (%${pct})`;
+      } else if (progress > 0.25) {
+        sanctuaryWelcome.classList.remove('visible');
+        hudStatus.textContent = `KALE KAPISI AÇILIYOR: %${pct}`;
+      } else {
+        sanctuaryWelcome.classList.remove('visible');
+        hudStatus.textContent = `KORİDOR & DUVAR YAZILARI: %${pct}`;
       }
     });
   </script>

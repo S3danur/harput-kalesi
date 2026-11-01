@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harput Kalesi | 3D İnteraktif Keşif & Koleksiyon</title>
+  
+  <!-- Google Fonts: Sinematik ve Tarihi Tipografi -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-light: #f3e5ab;
+      --amber: #ff7b00;
+      --dark-bg: #07060a;
+      --glass-bg: rgba(14, 12, 18, 0.72);
+      --glass-border: rgba(212, 175, 55, 0.28);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      color: #f4f0ea;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      /* 600vh uzunluk ile yumuşak ve uzun bir 3D yürüyüş mesafesi */
+      height: 620vh;
+    }
+
+    /* Sabit 3D Sahne Arka Planı */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Sinematik Karartma (Vignette) */
+    .vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(circle at center, transparent 45%, rgba(4, 3, 7, 0.88) 100%);
+    }
+
+    /* Üst Navigasyon ve İlerleme Çubuğu */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.4rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: linear-gradient(to bottom, rgba(7,6,10,0.9), transparent);
+    }
+
+    .brand {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand span {
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+      opacity: 0.8;
+    }
+
+    .hud-status {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ccc;
+    }
+
+    .cart-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 0.55rem 1.2rem;
+      border-radius: 99px;
+      color: var(--gold-light);
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .cart-pill:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 30;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--amber), var(--gold));
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    /* Kaydırma Katmanı */
+    main {
+      position: relative;
+      z-index: 10;
+    }
+
+    .step-section {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      pointer-events: none;
+    }
+
+    .info-card {
+      max-width: 580px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 2.6rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      text-align: center;
+      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .info-card.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 1.1rem;
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    h1, h2 {
+      font-family: 'Cinzel', serif;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      color: var(--gold-light);
+    }
+
+    p {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: #d6d1c7;
+      font-weight: 300;
+    }
+
+    /* Scroll İpucu Animasyonu */
+    .scroll-prompt {
+      margin-top: 1.8rem;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold);
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .mouse-icon {
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--gold);
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .mouse-wheel {
+      width: 4px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: wheelScroll 1.6s infinite;
+    }
+
+    @keyframes wheelScroll {
+      0% { opacity: 1; top: 6px; }
+      100% { opacity: 0; top: 20px; }
+    }
+
+    /* Sağ ve Sol Hizalı Ara Duraklar */
+    .step-section.align-left {
+      justify-content: flex-start;
+      padding-left: 8vw;
+    }
+
+    .step-section.align-right {
+      justify-content: flex-end;
+      padding-right: 8vw;
+    }
+
+    /* Final: Mağaza Vitrini (3 Ürün) */
+    .shop-section {
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 2rem 3rem;
+      pointer-events: auto;
+    }
+
+    .shop-header {
+      text-align: center;
+      max-width: 680px;
+      margin-bottom: 2.8rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    .product-card {
+      background: rgba(16, 14, 22, 0.84);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem 1.8rem;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--gold);
+      box-shadow: 0 20px 45px rgba(212, 175, 55, 0.16);
+    }
+
+    .product-visual {
+      height: 150px;
+      border-radius: 14px;
+      background: radial-gradient(circle at center, rgba(212, 175, 55, 0.2), rgba(10, 9, 14, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .product-visual svg {
+      width: 68px;
+      height: 68px;
+      stroke: var(--gold);
+      filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-visual svg {
+      transform: scale(1.12) rotate(3deg);
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.18);
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .product-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .product-desc {
+      font-size: 0.92rem;
+      color: #bdb6ac;
+      margin-bottom: 1.4rem;
+      line-height: 1.6;
+    }
+
+    .product-specs {
+      list-style: none;
+      margin-bottom: 1.6rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+      font-size: 0.84rem;
+      color: #9e978e;
+    }
+
+    .product-specs li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .product-specs li strong {
+      color: #e2dcd3;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: auto;
+    }
+
+    .price {
+      font-family: 'Cinzel', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .buy-btn {
+      background: linear-gradient(135deg, #d4af37, #aa8010);
+      color: #0b090e;
+      border: none;
+      padding: 0.75rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: filter 0.25s ease, transform 0.2s ease;
+    }
+
+    .buy-btn:hover {
+      filter: brightness(1.15);
+      transform: scale(1.03);
+    }
+
+    .buy-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Bildirim Toast */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: rgba(18, 15, 24, 0.95);
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      z-index: 50;
+      font-size: 0.9rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.35s ease;
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.2rem;
+      }
+      .step-section.align-left,
+      .step-section.align-right {
+        justify-content: center;
+        padding: 1.2rem;
+      }
+      .info-card {
+        padding: 1.8rem 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- İlerleme Çubuğu -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Üst Menü -->
+  <header>
+    <div class="brand">
+      HARPUT KALESİ <span>M.Ö. 8. YÜZYIL</span>
+    </div>
+    <div class="hud-status">
+      <span id="distanceIndicator">Mesafe: Kale Yolu</span>
+      <div class="cart-pill" id="cartCounter">Sepet (0)</div>
+    </div>
+  </header>
+
+  <!-- 3D WebGL Sahnesi -->
+  <canvas id="webgl-canvas"></canvas>
+  <div class="vignette"></div>
+
+  <!-- Kaydırma İle İlerleyen Hikaye ve Kapı Girişi Katmanları -->
+  <main>
+    <!-- 1. Durak: Başlangıç (Sur Dışı Yolu) -->
+    <section class="step-section">
+      <div class="info-card active">
+        <span class="badge">Birinci Şahıs 3D Keşif</span>
+        <h1>Süt Kalesi'nin İzinde</h1>
+        <p>
+          Urartular tarafından sarp kayalıklar üzerine inşa edilen, harcına su yerine süt katıldığı rivayet edilen 3000 yıllık efsanevi Harput Kalesi'nin kapısındasınız. 
+          Meşaleli taş yoldan içeri girmek için fareyi aşağı kaydırın.
+        </p>
+        <div class="scroll-prompt">
+          <div class="mouse-icon"><div class="mouse-wheel"></div></div>
+          <span>Kaleye İlerle</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Durak: Surlar ve Efsane -->
+    <section class="step-section align-left">
+      <div class="info-card">
+        <span class="badge">Mimari & Efsane</span>
+        <h2>Harput'un Süt Harcı</h2>
+        <p>
+          Kale inşası sırasında yaşanan su kıtlığı nedeniyle dönemin hükümdarı sürülerden sağılan sütlerin harçta kullanılmasını emreder. Beyazımsı kehribar taş dokusu ve aşılamaz burçlarıyla Harput, Doğu Anadolu'nun en görkemli savunma kalesine dönüşür.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Durak: Kale Kapısı Açılışı -->
+    <section class="step-section align-right">
+      <div class="info-card">
+        <span class="badge">Ana Giriş Kapısı</span>
+        <h2>Tarihi Kapı Açılıyor</h2>
+        <p>
+          Artuklu, Selçuklu ve Osmanlı izlerini taşıyan devasa ahşap-demir kapı kanatları aralanıyor. Dış kaleden İç Kale'nin kutsal avlusuna ve gizli geçitlerin merkezine adım atıyorsunuz.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Durak: İç Avlu & Atmosfer -->
+    <section class="step-section">
+      <div class="info-card">
+        <span class="badge">İç Kale Avlusu</span>
+        <h2>Zamanın Durduğu Avlu</h2>
+        <p>
+          Kalenin kalbine ulaştınız. Şimdi bu bin yıllık mirası yaşam alanınıza taşıyacak, Harput'un ruhundan ilham alınarak tasarlanmış üç özel koleksiyon parçasını inceleyin.
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. Durak: 3 Özel Ürün Vitrini (Koku, Mum, Lego) -->
+    <section class="shop-section">
+      <div class="shop-header">
+        <span class="badge">Resmi Hatıra Koleksiyonu</span>
+        <h2>Harput Kalesi Özel Mağazası</h2>
+        <p>Kale keşfinizin sonunda, Harput'un dokusunu, kokusunu ve mimarisini evinize taşıyan sınırlı üretim 3 özel tasarım ürün:</p>
+      </div>
+
+      <div class="product-grid">
+        <!-- Ürün 1: Koku -->
+        <article class="product-card">
+          <div>
+            <div class="product-visual">
+              <span class="product-tag">İmza Seri</span>
+              <!-- İksir / Koku Şişesi SVG -->
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 3h6v3l4 6v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7l4-6V3z"/>
+                <path d="M9 3h6"/>
+                <path d="M8 14h8"/>
+                <circle cx="12" cy="17" r="1.5"/>
+              </svg>
+            </div>
+            <h3 class="product-title">Harput Mistik Oda & Ortam Kokusu</h3>
+            <p class="product-desc">
+              Harput'un tarihi konaklarından, sedir ağacı, yabani kekik, reyhan ve kehribar (amber) notalarından oluşan kalıcı niş esans.
+            </p>
+            <ul class="product-specs">
+              <li><span>Notalar:</span> <strong>Sedir, Amber, Dağ Kekiği</strong></li>
+              <li><span>Hacim:</span> <strong>250 ml Cam Karaf + Bambu</strong></li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <span class="price">₺650</span>
+            <button class="buy-btn" onclick="addToCart('Harput Mistik Koku')">Sepete Ekle</button>
+          </div>
+        </article>
+
+        <!-- Ürün 2: Mum -->
+        <article class="product-card">
+          <div>
+            <div class="product-visual">
+              <span class="product-tag">El Yapımı</span>
+              <!-- Mum SVG -->
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2c1.5 2 2 3.5 2 5a2 2 0 0 1-4 0c0-1.5.5-3 2-5z"/>
+                <rect x="7" y="9" width="10" height="12" rx="2"/>
+                <path d="M7 13h10"/>
+              </svg>
+            </div>
+            <h3 class="product-title">Süt Kalesi Doğal Soya Mumu</h3>
+            <p class="product-desc">
+              Süt Kalesi efsanesine ithafen sıcak süt, vanilya, bal ve sandal ağacı aromalı; taş dokulu seramik kapta çıtırdayan ahşap fitilli mum.
+            </p>
+            <ul class="product-specs">
+              <li><span>Yanma Süresi:</span> <strong>~45 Saat (Ahşap Fitil)</strong></li>
+              <li><span>İçerik:</span> <strong>%100 Doğal Soya Wax</strong></li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <span class="price">₺480</span>
+            <button class="buy-btn" onclick="addToCart('Süt Kalesi Soya Mumu')">Sepete Ekle</button>
+          </div>
+        </article>
+
+        <!-- Ürün 3: Lego Harput Kalesi -->
+        <article class="product-card">
+          <div>
+            <div class="product-visual">
+              <span class="product-tag">Koleksiyonluk</span>
+              <!-- Kale / Lego Blok SVG -->
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21V8l3-3 3 3v3h4V8l3-3 3 3v13H4z"/>
+                <path d="M9 21v-5a3 3 0 0 1 6 0v5"/>
+                <rect x="7" y="3" width="2" height="2"/>
+                <rect x="15" y="3" width="2" height="2"/>
+              </svg>
+            </div>
+            <h3 class="product-title">Lego Harput Kalesi Mimari Set</h3>
+            <p class="product-desc">
+              Harput Kalesi'nin dış burçlarını, sarp kayalıklarını, açılır ana kapısını ve iç avlusunu birebir inşa edebileceğiniz mikro-mimari blok seti.
+            </p>
+            <ul class="product-specs">
+              <li><span>Parça Sayısı:</span> <strong>1.450 Parça + Işık Kiti</strong></li>
+              <li><span>Ölçek:</span> <strong>34cm x 26cm Koleksiyon Standı</strong></li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <span class="price">₺1.850</span>
+            <button class="buy-btn" onclick="addToCart('Lego Harput Kalesi Seti')">Sepete Ekle</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast">Ürün sepete eklendi!</div>
+
+  <!-- Three.js & GSAP CDN Bağlantıları -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    // --- SEPET ETKİLEŞİMİ ---
+    let cartCount = 0;
+    function addToCart(productName) {
+      cartCount++;
+      document.getElementById('cartCounter').textContent = `Sepet (${cartCount})`;
+      const toast = document.getElementById('toast');
+      toast.textContent = `✓ ${productName} sepete eklendi!`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2600);
+    }
+
+    // --- KART GÖRÜNÜRLÜK OBSERVER ---
+    const cards = document.querySelectorAll('.info-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else {
+          entry.target.classList.remove('active');
+        }
+      });
+    }, { threshold: 0.35 });
+    cards.forEach(card => observer.observe(card));
+
+    // --- 3D SAHNE KURULUMU (THREE.JS) ---
+    const canvas = document.getElementById('webgl-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x07060a);
+    scene.fog = new THREE.FogExp2(0x07060a, 0.015);
+
+    // 1. Şahıs (FPS) Kamera Kurulumu
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 300);
+    camera.position.set(0, 3.2, 65); // Yürüyüş başlangıç noktası
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    // --- PROSEDÜREL HARPUT TAŞ DOKUSU ÜRETİCİ (Harici resim gerektirmez) ---
+    function createStoneTexture(baseHex, noiseHex) {
+      const c = document.createElement('canvas');
+      c.width = 256;
+      c.height = 256;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = baseHex;
+      ctx.fillRect(0, 0, 256, 256);
+
+      // Taş derzleri ve eskitme dokusu
+      ctx.strokeStyle = '#1a1612';
+      ctx.lineWidth = 3;
+      for (let y = 0; y < 256; y += 32) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(256, y);
+        ctx.stroke();
+        const offset = (y / 32) % 2 === 0 ? 0 : 32;
+        for (let x = offset; x < 256; x += 64) {
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y + 32);
+          ctx.stroke();
+        }
+      }
+
+      for (let i = 0; i < 1800; i++) {
+        ctx.fillStyle = i % 2 === 0 ? noiseHex : 'rgba(0,0,0,0.22)';
+        ctx.fillRect(Math.random() * 256, Math.random() * 256, 3, 3);
+      }
+
+      const texture = new THREE.CanvasTexture(c);
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(4, 4);
+      return texture;
+    }
+
+    const stoneTex = createStoneTexture('#6e5d4f', '#8c7865');
+    const stoneMaterial = new THREE.MeshStandardMaterial({
+      map: stoneTex,
+      roughness: 0.88,
+      metalness: 0.08
+    });
+
+    const darkRockMaterial = new THREE.MeshStandardMaterial({
+      color: 0x26211d,
+      roughness: 0.95
+    });
+
+    const woodDoorMaterial = new THREE.MeshStandardMaterial({
+      color: 0x3b2313,
+      roughness: 0.75,
+      metalness: 0.2
+    });
+
+    const goldMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd4af37,
+      roughness: 0.3,
+      metalness: 0.85
+    });
+
+    // --- IŞIKLANDIRMA ---
+    const ambientLight = new THREE.AmbientLight(0x2a2438, 0.7);
+    scene.add(ambientLight);
+
+    const moonLight = new THREE.DirectionalLight(0x9bb8ff, 0.45);
+    moonLight.position.set(25, 60, 30);
+    scene.add(moonLight);
+
+    // --- KALE VE ÇEVRE İNŞASI ---
+    const worldGroup = new THREE.Group();
+    scene.add(worldGroup);
+
+    // 1. Sarp Kayalık Zemin ve Taş Köprü Yolu
+    const cliffGeo = new THREE.BoxGeometry(120, 20, 160);
+    const cliff = new THREE.Mesh(cliffGeo, darkRockMaterial);
+    cliff.position.set(0, -10.1, 0);
+    worldGroup.add(cliff);
+
+    const pathGeo = new THREE.BoxGeometry(10, 0.4, 110);
+    const pathMesh = new THREE.Mesh(pathGeo, stoneMaterial);
+    pathMesh.position.set(0, 0, 20);
+    pathMesh.receiveShadow = true;
+    worldGroup.add(pathMesh);
+
+    // Köprü Korkulukları ve Meşaleler
+    const torchLights = [];
+    for (let z = 55; z >= 10; z -= 11) {
+      [-4.6, 4.6].forEach(xPos => {
+        // Taş Sütun
+        const pillar = new THREE.Mesh(new THREE.BoxGeometry(1.1, 2.8, 1.1), stoneMaterial);
+        pillar.position.set(xPos, 1.4, z);
+        worldGroup.add(pillar);
+
+        // Ateş Küresi
+        const flame = new THREE.Mesh(
+          new THREE.SphereGeometry(0.28, 8, 8),
+          new THREE.MeshBasicMaterial({ color: 0xff9922 })
+        );
+        flame.position.set(xPos, 3.1, z);
+        worldGroup.add(flame);
+
+        // Meşale Işığı
+        const pLight = new THREE.PointLight(0xff7b1a, 1.3, 18);
+        pLight.position.set(xPos, 3.4, z);
+        worldGroup.add(pLight);
+        torchLights.push({ light: pLight, flame, baseIntensity: 1.3, offset: Math.random() * 10 });
+      });
+    }
+
+    // 2. HARPUT KALESİ ANA CEPHE & BURÇLAR (Z = 0 Noktasında)
+    function createCrenellations(width, depth, yPos, zPos, xOffset = 0) {
+      const count = Math.floor(width / 2.2);
+      for (let i = 0; i < count; i++) {
+        const merlon = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.4, depth), stoneMaterial);
+        const x = xOffset - width / 2 + i * 2.2 + 1.1;
+        merlon.position.set(x, yPos + 0.7, zPos);
+        worldGroup.add(merlon);
+      }
+    }
+
+    // Sol ve Sağ Ön Sur Duvarları (Ortada 8 birimlik Kapı Boşluğu)
+    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(18, 16, 4), stoneMaterial);
+    leftWall.position.set(-13, 8, 0);
+    worldGroup.add(leftWall);
+    createCrenellations(18, 4.2, 16, 0, -13);
+
+    const rightWall = new THREE.Mesh(new THREE.BoxGeometry(18, 16, 4), stoneMaterial);
+    rightWall.position.set(13, 8, 0);
+    worldGroup.add(rightWall);
+    createCrenellations(18, 4.2, 16, 0, 13);
+
+    // Kapı Üstü Kemer Bloğu
+    const gateHeader = new THREE.Mesh(new THREE.BoxGeometry(8, 6, 4.4), stoneMaterial);
+    gateHeader.position.set(0, 13, 0);
+    worldGroup.add(gateHeader);
+    createCrenellations(8, 4.4, 16, 0, 0);
+
+    // Kapı Kemer Süsü (Altın Kitabe Plakası)
+    const plaque = new THREE.Mesh(new THREE.BoxGeometry(4.5, 1.2, 0.3), goldMaterial);
+    plaque.position.set(0, 11.8, 2.2);
+    worldGroup.add(plaque);
+
+    // İki Devasa Köşe Burcu (Süt Kalesi Kuleleri)
+    [-22, 22].forEach(xPos => {
+      const tower = new THREE.Mesh(new THREE.CylinderGeometry(5.5, 6.2, 22, 16), stoneMaterial);
+      tower.position.set(xPos, 11, 1);
+      worldGroup.add(tower);
+
+      // Burç Siperlikleri
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 6) {
+        const battlement = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.5, 1.4), stoneMaterial);
+        battlement.position.set(
+          xPos + Math.cos(a) * 5.2,
+          22.7,
+          1 + Math.sin(a) * 5.2
+        );
+        worldGroup.add(battlement);
+      }
+    });
+
+    // 3. AÇILIR KAPANIR DEVASA KALE KAPISI (Sol ve Sağ Kanat Pivotları)
+    const leftDoorPivot = new THREE.Group();
+    leftDoorPivot.position.set(-4, 0, 0);
+    worldGroup.add(leftDoorPivot);
+
+    const leftDoorMesh = new THREE.Mesh(new THREE.BoxGeometry(4, 10, 0.6), woodDoorMaterial);
+    leftDoorMesh.position.set(2, 5, 0);
+    leftDoorPivot.add(leftDoorMesh);
+
+    // Kapı Üzeri Demir/Altın Kuşaklar
+    [2.5, 5, 7.5].forEach(y => {
+      const studL = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.35, 0.7), goldMaterial);
+      studL.position.set(2, y, 0);
+      leftDoorPivot.add(studL);
+    });
+
+    const rightDoorPivot = new THREE.Group();
+    rightDoorPivot.position.set(4, 0, 0);
+    worldGroup.add(rightDoorPivot);
+
+    const rightDoorMesh = new THREE.Mesh(new THREE.BoxGeometry(4, 10, 0.6), woodDoorMaterial);
+    rightDoorMesh.position.set(-2, 5, 0);
+    rightDoorPivot.add(rightDoorMesh);
+
+    [2.5, 5, 7.5].forEach(y => {
+      const studR = new THREE.Mesh(new THREE.BoxGeometry(3.8, 0.35, 0.7), goldMaterial);
+      studR.position.set(-2, y, 0);
+      rightDoorPivot.add(studR);
+    });
+
+    // 4. İÇ KALE AVLUSU VE ÜRÜN KAİDELERİ (Z = -5 ile -38 arası)
+    const backKeep = new THREE.Mesh(new THREE.BoxGeometry(36, 24, 6), stoneMaterial);
+    backKeep.position.set(0, 12, -38);
+    worldGroup.add(backKeep);
+    createCrenellations(36, 6.2, 24, -38, 0);
+
+    const sideWallL = new THREE.Mesh(new THREE.BoxGeometry(4, 15, 38), stoneMaterial);
+    sideWallL.position.set(-20, 7.5, -19);
+    worldGroup.add(sideWallL);
+
+    const sideWallR = new THREE.Mesh(new THREE.BoxGeometry(4, 15, 38), stoneMaterial);
+    sideWallR.position.set(20, 7.5, -19);
+    worldGroup.add(sideWallR);
+
+    // Avlu İçi Sıcak Aydınlatma
+    const courtyardLight = new THREE.PointLight(0xffb74d, 2.2, 45);
+    courtyardLight.position.set(0, 10, -22);
+    worldGroup.add(courtyardLight);
+
+    // Avluda 3 Ürünü Temsil Eden 3D Sergi Kaidesi (Koku, Mum, Lego)
+    const displayArtifacts = [];
+    const artifactPositions = [-5.5, 0, 5.5];
+
+    artifactPositions.forEach((xPos, index) => {
+      // Mermer/Taş Kaide
+      const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.4, 2.4, 12), stoneMaterial);
+      pedestal.position.set(xPos, 1.2, -25);
+      worldGroup.add(pedestal);
+
+      const goldRing = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 1.2, 0.15, 16), goldMaterial);
+      goldRing.position.set(xPos, 2.45, -25);
+      worldGroup.add(goldRing);
+
+      let itemMesh;
+      if (index === 0) {
+        // 1. Harput Kokusu (Kristal İksir Şişesi)
+        itemMesh = new THREE.Mesh(
+          new THREE.OctahedronGeometry(0.85, 1),
+          new THREE.MeshStandardMaterial({ color: 0xe6a100, metalness: 0.7, roughness: 0.15 })
+        );
+      } else if (index === 1) {
+        // 2. Süt Kalesi Mumu (Silindir Mum + Alev)
+        itemMesh = new THREE.Group();
+        const wax = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.65, 0.65, 1.3, 16),
+          new THREE.MeshStandardMaterial({ color: 0xfff8e7, roughness: 0.4 })
+        );
+        const candleFlame = new THREE.Mesh(
+          new THREE.ConeGeometry(0.22, 0.55, 8),
+          new THREE.MeshBasicMaterial({ color: 0xffaa00 })
+        );
+        candleFlame.position.y = 0.9;
+        itemMesh.add(wax, candleFlame);
+      } else {
+        // 3. Lego Harput Kalesi (Minyatür Kale Maketi)
+        itemMesh = new THREE.Group();
+        const miniBase = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.8, 1.3), goldMaterial);
+        const miniTowerL = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.35, 0.45), goldMaterial);
+        miniTowerL.position.set(-0.45, 0.3, 0.45);
+        const miniTowerR = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.35, 0.45), goldMaterial);
+        miniTowerR.position.set(0.45, 0.3, 0.45);
+        itemMesh.add(miniBase, miniTowerL, miniTowerR);
+      }
+
+      itemMesh.position.set(xPos, 3.6, -25);
+      worldGroup.add(itemMesh);
+      displayArtifacts.push(itemMesh);
+    });
+
+    // 5. GECE YILDIZLARI VE HAVADA UÇUŞAN KIVILCIM PARÇACIKLARI
+    const particlesGeo = new THREE.BufferGeometry();
+    const particleCount = 600;
+    const posArray = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 110;
+      posArray[i + 1] = Math.random() * 45 + 1;
+      posArray[i + 2] = (Math.random() - 0.5) * 140;
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMat = new THREE.PointsMaterial({
+      size: 0.22,
+      color: 0xffcc66,
+      transparent: true,
+      opacity: 0.75
+    });
+    const particleSystem = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particleSystem);
+
+    // --- FARE HAREKETİ İLE HAFİF 1. ŞAHIS KAFA ÇEVİRME (PARALLAX) ---
+    let targetLookX = 0;
+    let targetLookY = 0;
+    window.addEventListener('mousemove', (e) => {
+      const normX = (e.clientX / window.innerWidth) - 0.5;
+      const normY = (e.clientY / window.innerHeight) - 0.5;
+      targetLookX = -normX * 2.2;
+      targetLookY = -normY * 1.1;
+    });
+
+    // --- GSAP SCROLLTRIGGER İLE KAMERA YÜRÜYÜŞÜ VE KAPI AÇILIŞI ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scrollState = {
+      camZ: 65,
+      camY: 3.2,
+      doorAngle: 0
+    };
+
+    const distanceIndicator = document.getElementById('distanceIndicator');
+    const progressBar = document.getElementById('progressBar');
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.2,
+        onUpdate: (self) => {
+          const pct = Math.round(self.progress * 100);
+          progressBar.style.width = `${pct}%`;
+
+          if (pct < 30) {
+            distanceIndicator.textContent = "Konum: Süt Kalesi Taş Köprüsü";
+          } else if (pct < 58) {
+            distanceIndicator.textContent = "Konum: Harput Ana Kapı Girişi";
+          } else if (pct < 82) {
+            distanceIndicator.textContent = "Konum: İç Kale Avlusu";
+          } else {
+            distanceIndicator.textContent = "Konum: Koleksiyon Sergisi";
+          }
+        }
+      }
+    });
+
+    // 1. Aşama: Köprüden Kapıya Yaklaşma
+    tl.to(scrollState, {
+      camZ: 12,
+      camY: 3.4,
+      duration: 2,
+      ease: "none"
+    })
+    // 2. Aşama: Kapı Kanatlarının İki Yana Açılması ve İçeri Giriş
+    .to(scrollState, {
+      doorAngle: Math.PI * 0.62,
+      camZ: -4,
+      camY: 3.5,
+      duration: 2,
+      ease: "power1.inOut"
+    })
+    // 3. Aşama: Avlu İçindeki 3 Ürün Kaidesinin Önüne İlerleme
+    .to(scrollState, {
+      camZ: -17.5,
+      camY: 3.3,
+      duration: 2,
+      ease: "power1.out"
+    });
+
+    // --- ANİMASYON DÖNGÜSÜ (RENDER LOOP) ---
+    const clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
+
+      // 1. Şahıs yürüyüş hissi (adım attıkça hafif yukarı-aşağı salınım)
+      const walkBob = Math.sin(scrollState.camZ * 0.85) * 0.14;
+      camera.position.z = scrollState.camZ;
+      camera.position.y = scrollState.camY + walkBob;
+
+      // Kamera bakış yönü (İleri + Fare sapması)
+      camera.lookAt(
+        targetLookX,
+        camera.position.y + targetLookY * 0.5,
+        camera.position.z - 12
+      );
+
+      // Kale Kapısı Kanatlarını Döndür
+      leftDoorPivot.rotation.y = -scrollState.doorAngle;
+      rightDoorPivot.rotation.y = scrollState.doorAngle;
+
+      // Meşale Alevlerinin Titremesi
+      torchLights.forEach(t => {
+        const flicker = Math.sin(elapsed * 8 + t.offset) * 0.22 + Math.cos(elapsed * 13 + t.offset) * 0.12;
+        t.light.intensity = t.baseIntensity + flicker;
+        const scale = 1 + flicker * 0.25;
+        t.flame.scale.set(scale, scale * 1.2, scale);
+      });
+
+      // Avludaki 3 Ürünün (Koku, Mum, Lego) Kendi Etrafında Zarif Dönüşü
+      displayArtifacts.forEach((item, idx) => {
+        item.rotation.y = elapsed * 0.8 + idx;
+        item.position.y = 3.6 + Math.sin(elapsed * 2 + idx) * 0.15;
+      });
+
+      // Kıvılcımların Yükselişi
+      particleSystem.rotation.y = elapsed * 0.02;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // --- EKRAN BOYUTU DEĞİŞİMİNE UYUM ---
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

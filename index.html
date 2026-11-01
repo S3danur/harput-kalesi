@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harput Mirası | Uzun Koridor & 3D Kale Kapısı Girişi</title>
+  <title>Harput Mirası | 3D Kale Kapısı & Koleksiyon</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -158,10 +158,10 @@
     }
 
     /* =========================================================================
-       UZATILMIŞ UZUN 3D TAŞ KORİDOR VE 8 KİTABE (720vh)
+       SADECE KAPI ANİMASYONU (KORİDOR YOK) - 250vh
        ========================================================================= */
     .gate-scroll-track {
-      height: 720vh;
+      height: 250vh;
       position: relative;
     }
 
@@ -172,106 +172,10 @@
       height: 100vh;
       overflow: hidden;
       perspective: 1200px;
-      background: radial-gradient(circle at 50% 45%, #462510 0%, #1f0d04 60%, #0c0401 100%);
+      background: #110502;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    /* Koridor İçi Derinlik Zemin & Tavan */
-    .corridor-floor {
-      position: absolute;
-      bottom: -35%;
-      left: 5%;
-      width: 90%;
-      height: 75%;
-      background: 
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 3px, transparent 3px, transparent 100px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.4) 0px, rgba(0,0,0,0.4) 4px, #3d2311 4px, #271408 60px);
-      transform: rotateX(76deg);
-      box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
-      border-left: 5px solid var(--gold);
-      border-right: 5px solid var(--gold);
-    }
-
-    /* Sol ve Sağ Koridor Duvarları */
-    .corridor-wall {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 18%;
-      background: 
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 4px, #2a150a 4px, #3b2010 50px);
-      box-shadow: inset 0 0 50px #000;
-      z-index: 2;
-    }
-
-    .corridor-wall.left { left: 0; border-right: 3px solid rgba(212,175,55,0.4); }
-    .corridor-wall.right { right: 0; border-left: 3px solid rgba(212,175,55,0.4); }
-
-    /* Koridordaki 8 Farklı Tarihi Bilgilendirme Kitabesi */
-    .plaque-stream {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-    }
-
-    .history-card {
-      position: absolute;
-      width: 320px;
-      max-width: 78vw;
-      background: linear-gradient(145deg, rgba(46, 18, 10, 0.96), rgba(22, 8, 4, 0.98));
-      border: 2px solid var(--gold);
-      border-radius: 16px;
-      padding: 1.3rem 1.4rem;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(255,140,0,0.3);
-      color: #f7ede1;
-      opacity: 0;
-      transform: translateY(60px) scale(0.85);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .history-card.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .history-card.pos-left {
-      left: 6%;
-      top: 25%;
-      border-left: 6px solid var(--gold-bright);
-    }
-
-    .history-card.pos-right {
-      right: 6%;
-      top: 25%;
-      border-right: 6px solid var(--gold-bright);
-    }
-
-    .card-tag {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold-bright);
-      background: rgba(212, 175, 55, 0.2);
-      padding: 0.25rem 0.6rem;
-      border-radius: 5px;
-      font-weight: 700;
-      margin-bottom: 0.45rem;
-    }
-
-    .history-card h3 {
-      font-size: 1.55rem;
-      color: #fff;
-      margin-bottom: 0.4rem;
-    }
-
-    .history-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: #ded1c1;
     }
 
     /* KAPI AÇILDIĞINDA İÇERİDE GÖRÜNEN AYDINLIK KALE AVLUSU */
@@ -337,16 +241,16 @@
     }
 
     .gate-doors-3d {
-      width: 520px;
-      height: 640px;
-      max-width: 84vw;
-      max-height: 80vh;
-      border-radius: 260px 260px 0 0;
+      width: 580px;
+      height: 700px;
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 290px 290px 0 0;
       border: 8px solid var(--gold);
       position: relative;
       display: flex;
       overflow: hidden;
-      box-shadow: 0 0 90px rgba(0,0,0,0.95);
+      box-shadow: 0 0 100px rgba(0,0,0,0.95);
       transform-style: preserve-3d;
     }
 
@@ -378,6 +282,29 @@
       height: 16px;
       background: linear-gradient(90deg, #7a5818, var(--gold-bright), #7a5818);
       box-shadow: 0 3px 8px rgba(0,0,0,0.8);
+    }
+
+    /* KAPI ÜSTÜNDE "KAYDIRIN" YAZISI */
+    .scroll-hint {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gold-bright);
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.6);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--gold);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { top: -60px; }
+      50% { top: -75px; }
     }
 
     /* HUD ALT BİLGİ VE METRE */
@@ -623,7 +550,6 @@
 
     @media (max-width: 992px) {
       .products-grid { grid-template-columns: 1fr; }
-      .history-card { width: 260px; }
     }
   </style>
 </head>
@@ -651,29 +577,29 @@
   <section class="hero-section" id="anasayfa">
     <div class="hero-content">
       <span class="ornament">✦ ─── ❖ ─── ✦</span>
-      <h1>Harput Kalesi'nin Kadim Koridorları</h1>
+      <h1>Harput Kalesi'nin Sırlarına Açılan Kapı</h1>
       <p>
-        Aşağı kaydırarak meşalelerle aydınlatılmış uzun taş koridorda yürüyün, duvarlardaki 8 tarihi kitabeyi okuyun ve devasa kale kapısından iç kaleye adım atın.
+        Hemen aşağı kaydırarak devasa ahşap kapıyı aralayın, kalenin kalbine adım atın ve size özel hazırlanmış Harput Mirası koleksiyonunu keşfedin.
       </p>
-      <a href="#kale-koridor" class="btn-gold">
-        <span>Uzun Koridora Adım At ›</span>
+      <a href="#kale-kapisi" class="btn-gold">
+        <span>Kapıyı Aç ve İçeri Gir ›</span>
       </a>
     </div>
   </section>
 
   <!-- =========================================================================
-       UZUN KORİDOR VE SIRAYLA AÇILAN 8 TARİHİ KİTABE (720vh)
+       SADECE KAPI AÇILIŞI (KORİDORSUZ)
        ========================================================================= -->
-  <section class="gate-scroll-track" id="kale-koridor">
+  <section class="gate-scroll-track" id="kale-kapisi">
     <div class="gate-sticky-stage">
 
-      <!-- İÇ KALE AVLUSU (KAPI AÇILDIĞINDA EN SONDA ÇIKAR) -->
+      <!-- İÇ KALE AVLUSU -->
       <div class="castle-sanctuary" id="castleSanctuary">
         <div class="sanctuary-modal" id="sanctuaryModal">
           <span class="ornament">✦ HARPUT İÇ KALESİ ✦</span>
           <h2>Kalenin Kalbine Ulaştınız</h2>
           <p>
-            Bin yıllık taş koridordan geçtiniz ve devasa kale kapısını araladınız. Şimdi Harput'un kokusunu, ışığını ve mimarisini evinize taşıyan 3 özel koleksiyon parçasını inceleyin.
+            Harput'un kokusunu, ışığını ve mimarisini evinize taşıyan 3 özel koleksiyon parçasını (Lego, Mum, Oda Kokusu) şimdi inceleyebilirsiniz.
           </p>
           <a href="#urunler" class="btn-gold">
             <span>3 Özel Ürünü Keşfet ›</span>
@@ -681,73 +607,10 @@
         </div>
       </div>
 
-      <!-- KORİDOR ZEMİN & DUVARLAR -->
-      <div class="corridor-wall left"></div>
-      <div class="corridor-wall right"></div>
-      <div class="corridor-floor"></div>
-
-      <!-- 8 ADET SIRAYLA GELEN TARİHİ BİLGİLENDİRME KİTABESİ -->
-      <div class="plaque-stream">
-        <!-- 1. Kitabe -->
-        <div class="history-card pos-left" id="card1">
-          <span class="card-tag">1. Durak • M.Ö. 8. Yüzyıl</span>
-          <h3>Urartu Krallığı ve Temeller</h3>
-          <p>Harput Kalesi, Urartu Krallığı tarafından Elazığ Ovası'na hakim, aşılması imkansız sarp kayalıklar oyularak askeri garnizon amacıyla inşa edilmiştir.</p>
-        </div>
-
-        <!-- 2. Kitabe -->
-        <div class="history-card pos-right" id="card2">
-          <span class="card-tag">2. Durak • Efsanenin Doğuşu</span>
-          <h3>Neden "Süt Kalesi"?</h3>
-          <p>Kalenin inşası sırasında yaşanan şiddetli kuraklık nedeniyle harcında su yerine hayvanlardan sağılan sütler kullanılmış; kaleye adını bu efsane vermiştir.</p>
-        </div>
-
-        <!-- 3. Kitabe -->
-        <div class="history-card pos-left" id="card3">
-          <span class="card-tag">3. Durak • Gizli Geçitler</span>
-          <h3>Kayaya Oyulan Dehlizler</h3>
-          <p>Kuşatma sırasında kale halkının su ve erzak temin etmesi amacıyla vadi tabanına kadar inen merdivenli gizli kaya tünelleri açılmıştır.</p>
-        </div>
-
-        <!-- 4. Kitabe -->
-        <div class="history-card pos-right" id="card4">
-          <span class="card-tag">4. Durak • Artuklu Dönemi</span>
-          <h3>Belek Gazi'nin Hükümranlığı</h3>
-          <p>12. yüzyılda Harput Artukluları döneminde kale zenginleştirilmiş, Haçlı Seferleri'nde ünlü komutan I. Joscelin ve Kudüs Kralı Baudouin buradaki zindanda esir tutulmuştur.</p>
-        </div>
-
-        <!-- 5. Kitabe -->
-        <div class="history-card pos-left" id="card5">
-          <span class="card-tag">5. Durak • Efsane</span>
-          <h3>Gizemli Kız Efsanesi</h3>
-          <p>Kalenin derinliklerinde her dolunayda kaleyi koruduğuna inanılan gizemli kız efsanesi, Harput türküleri ve masallarında asırlardır yaşatılmaktadır.</p>
-        </div>
-
-        <!-- 6. Kitabe -->
-        <div class="history-card pos-right" id="card6">
-          <span class="card-tag">6. Durak • Selçuklu & Osmanlı</span>
-          <h3>Fethin ve Barışın İmzası</h3>
-          <p>Yavuz Sultan Selim'in Çaldıran Zaferi sonrasında Osmanlı topraklarına katılan Harput Kalesi, Doğu Anadolu'nun idari ve kültürel yönetim merkezi olmuştur.</p>
-        </div>
-
-        <!-- 7. Kitabe -->
-        <div class="history-card pos-left" id="card7">
-          <span class="card-tag">7. Durak • UNESCO Mirası</span>
-          <h3>Dünya Kültür Mirası Adayı</h3>
-          <p>Harput Tarihi Kenti ve Kalesi, barındırdığı camiler, kiliseler, hamamlar ve eşsiz eğri minaresiyle UNESCO Dünya Geçici Miras Listesi'nde yer almaktadır.</p>
-        </div>
-
-        <!-- 8. Kitabe -->
-        <div class="history-card pos-right" id="card8">
-          <span class="card-tag">8. Durak • Ana Kapı Önü</span>
-          <h3>İç Kale Kapısına Ulaştınız</h3>
-          <p>Artık kalenin son savunma hattındasınız. Kapı kanatları aralanıyor; iç avludaki Harput Mirası özel hatıra odasına adım atmak üzeresiniz.</p>
-        </div>
-      </div>
-
       <!-- 3D AÇILAN KALE KAPISI -->
       <div class="castle-gate-portal" id="gatePortal">
         <div class="gate-doors-3d">
+          <div class="scroll-hint">Kapıyı Açmak İçin Kaydırın ↓</div>
           <div class="gate-leaf left" id="gateLeft">
             <div class="gold-bar" style="top: 25%;"></div>
             <div class="gold-bar" style="top: 50%;"></div>
@@ -763,7 +626,7 @@
 
       <!-- HUD İLERLEME VE KONTROL -->
       <div class="gate-hud-bottom">
-        <span class="hud-title" id="hudStatus">KORİDOR: 1. DURAK (%0)</span>
+        <span class="hud-title" id="hudStatus">KAPI AÇILIYOR... (%0)</span>
         <div class="hud-bar">
           <div class="hud-fill" id="hudFill"></div>
         </div>
@@ -887,19 +750,8 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    // UZUN KORİDOR: 8 DURAĞI SCROLL YÜZDESİNE GÖRE SIRAYLA GÖSTERİR
-    const track = document.getElementById('kale-koridor');
-    const cards = [
-      document.getElementById('card1'),
-      document.getElementById('card2'),
-      document.getElementById('card3'),
-      document.getElementById('card4'),
-      document.getElementById('card5'),
-      document.getElementById('card6'),
-      document.getElementById('card7'),
-      document.getElementById('card8')
-    ];
-
+    // SADECE KAPI AÇILIŞI VE İÇERİ GİRİŞ
+    const track = document.getElementById('kale-kapisi');
     const gatePortal = document.getElementById('gatePortal');
     const gateLeft = document.getElementById('gateLeft');
     const gateRight = document.getElementById('gateRight');
@@ -916,46 +768,31 @@
 
       hudFill.style.width = `${pct}%`;
 
-      // 8 Kitabenin Koridorda Sırayla Belirip Geçmesi (progress 0.00 ile 0.80 arası)
-      const slot = 0.80 / cards.length;
-      cards.forEach((card, index) => {
-        const start = index * slot;
-        const end = start + slot;
-        if (progress >= start && progress < end && progress < 0.82) {
-          card.classList.add('active');
-          hudStatus.textContent = `KORİDOR: ${index + 1}. DURAK (%${pct})`;
-        } else {
-          card.classList.remove('active');
-        }
-      });
+      // Kapılar yavaşça aralanır
+      const angle = Math.min(120, progress * 135);
+      gateLeft.style.transform = `rotateY(${angle}deg)`;
+      gateRight.style.transform = `rotateY(-${angle}deg)`;
 
-      // 3D KALE KAPISININ AÇILIŞI VE İÇ KALEYE GİRİŞ (%80'den sonra başlar)
-      if (progress >= 0.78) {
-        const gateProgress = (progress - 0.78) / 0.22; // 0 ile 1 arası
-        const angle = Math.min(115, gateProgress * 125);
-        gateLeft.style.transform = `rotateY(${angle}deg)`;
-        gateRight.style.transform = `rotateY(-${angle}deg)`;
-
-        // Kapının içine doğru yaklaşma (Zoom)
-        const scale = 1 + gateProgress * 2.2;
-        gatePortal.style.transform = `scale(${scale})`;
-        gatePortal.style.opacity = gateProgress > 0.65 ? Math.max(0, 1 - (gateProgress - 0.65) * 3) : 1;
-
-        // İç Kalenin Aydınlanıp Karşılaması
-        castleSanctuary.style.transform = `scale(${0.9 + gateProgress * 0.2})`;
-        if (gateProgress > 0.45) {
-          sanctuaryModal.classList.add('visible');
-          hudStatus.textContent = `İÇ KALE VE MAĞAZA (%${pct})`;
-        } else {
-          sanctuaryModal.classList.remove('visible');
-          hudStatus.textContent = `KALE KAPISI AÇILIYOR (%${pct})`;
-        }
+      // Kapının içine doğru yaklaşma (Zoom)
+      const scale = 1 + progress * 2.5;
+      gatePortal.style.transform = `scale(${scale})`;
+      
+      // Belirli bir noktadan sonra kapı çerçevesi şeffaflaşarak kaybolur
+      if (progress > 0.65) {
+        gatePortal.style.opacity = Math.max(0, 1 - (progress - 0.65) * 3);
       } else {
-        gateLeft.style.transform = 'rotateY(0deg)';
-        gateRight.style.transform = 'rotateY(0deg)';
-        gatePortal.style.transform = 'scale(1)';
         gatePortal.style.opacity = 1;
+      }
+
+      // İç Kalenin Aydınlanıp Karşılaması
+      castleSanctuary.style.transform = `scale(${0.9 + progress * 0.1})`;
+      
+      if (progress > 0.55) {
+        sanctuaryModal.classList.add('visible');
+        hudStatus.textContent = `İÇ KALE VE MAĞAZA (%${pct})`;
+      } else {
         sanctuaryModal.classList.remove('visible');
+        hudStatus.textContent = `KAPI AÇILIYOR... (%${pct})`;
       }
     });
   </script>
